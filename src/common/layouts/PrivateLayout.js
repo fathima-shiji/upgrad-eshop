@@ -8,7 +8,7 @@ import Navbar from "../Navbar";
 
 const PrivateLayout = () => {
   const { auth } = useContext(AuthContext);
-  const { searchTerm, setSearchTerm } = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
 
   if (!auth.isLoggedIn) {
     return <Navigate to="/login" replace />;

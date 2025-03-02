@@ -1,14 +1,21 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import {  Link ,useNavigate } from "react-router";
+
 
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Container, Box, Avatar, Typography, TextField, Button } from "@mui/material";
 
-const Login = (props) => {
+
+
+import { AuthContext } from '../../App';
+
+
+const Login = () => {
     const [email, setEmail] = useState(""); 
     const [password, setPassword] = useState(""); 
     const [error, setError] = useState(""); 
     const navigate = useNavigate(); 
+    const {setAuth} = useContext(AuthContext);
 
     const handleSubmit = async (event) => {
         event.preventDefault(); 
@@ -48,8 +55,13 @@ const Login = (props) => {
             }
 
            
-            props.setIsLoggedIn(true)
+            setAuth({
+                isLoggedIn: true,
+                user: jsonResponse
+            })
+
             navigate("/");
+            
 
         } catch (err) {
             setError(err.message); 

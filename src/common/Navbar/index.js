@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import { AppBar, Toolbar, Typography } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { InputBase } from "@mui/material";
@@ -6,6 +6,9 @@ import SearchIcon from "@mui/icons-material/Search";
 import { styled, alpha } from "@mui/material/styles";
 import { Button } from "@mui/material";
 import { Link } from "react-router";
+
+import { AuthContext } from '../../App';
+
 
 
 
@@ -37,7 +40,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 
-const Navbar = ({isLoggedIn}) => {
+const Navbar = () => {
+    const {auth} = useContext(AuthContext);
+
+
     return (
         <AppBar position="static"  sx={{ backgroundColor: "#3949AB" }}>
             <Toolbar sx={{display: "flex", justifyContent: "space-between"}}>
@@ -61,15 +67,17 @@ const Navbar = ({isLoggedIn}) => {
                         Home
 
                     </Typography>
+                    {auth.user?.roles?.includes("ADMIN") && (
                     <Typography variant="body1" component="a" href="#" sx={{color: "white", textDecoration: "underline"}}>
                         Add Product
                     </Typography>
+                    )}
 
               
 
 
                 {
-                    isLoggedIn ? (
+                    auth.isLoggedIn ? (
                         <Button 
                     variant="contained" 
                     color="error" 

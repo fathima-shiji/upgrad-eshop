@@ -7,6 +7,9 @@ import { toast } from "react-toastify";
 
 import { SearchContext } from "../../context/SearchContext";
 
+import { fetchProductsAPI, deleteProductAPI } from "../../api/product";
+import { fetchCategoriesAPI } from "../../api/catogory";
+
 const Home = () => {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -21,53 +24,32 @@ const Home = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await fetch(
-        "https://dev-project-ecommerce.upgrad.dev/api/products/categories"
-      );
-      const data = await response.json();
+      const data = await fetchCategoriesAPI();
       const categoriesWithAll = ["All", ...data];
       setCategories(categoriesWithAll);
     } catch (error) {
-      console.error("Error fetching categories:", error);
+      toast.error("Failed to fetch categories");
     }
   };
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch(
-        "https://dev-project-ecommerce.upgrad.dev/api/products"
-      );
-      const data = await response.json();
-      setProducts(data);
+      const products = await fetchProductsAPI();
+      setProducts(products);
     } catch (error) {
-      console.error("Error fetching products:", error);
+      toast.error("Failed to fetch products");
     }
   };
 
   const deleteProduct = async (selectedProduct) => {
     try {
-      const response = await fetch(
-        `https://dev-project-ecommerce.upgrad.dev/api/products/${selectedProduct.id}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            "x-auth-token":
-              "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzaGlqaTJAZGVtby5jb20iLCJpYXQiOjE3NDA5MjM1NzAsImV4cCI6MTc0MDkzMTk3MH0.JRAaDngnxb5I_3vqiEpHQvv61FobjsSjSZVJtQleZZNcXY9tbipJCwQfYYZ1MRRF5PlGR3HdCa5VV95CJfUZlA",
-          },
-        }
+      await deleteProductAPI(selectedProduct.id);
+      setProducts(
+        products.filter((product) => product.id !== selectedProduct.id)
       );
-
-      if (response.ok) {
-        setProducts(
-          products.filter((product) => product.id !== selectedProduct.id)
-        );
-
-        toast.success("Product deleted successfully!");
-      }
+      toast.success("Product deleted successfully!");
     } catch (error) {
       toast.error("Failed to delete product!");
-      console.error("Error fetching categories:", error);
     }
   };
 
@@ -76,6 +58,20 @@ const Home = () => {
       return products;
     }
     return products.filter(isSelectedCategoryProduct);
+  };
+
+  const getSortedProducts = () => {
+    let sortedProducts = [...products];
+
+    if (sortOption === "price-high-low") {
+      sortedProducts.sort((a, b) => b.price - a.price);
+    } else if (sortOption === "price-low-high") {
+      sortedProducts.sort((a, b) => a.price - b.price);
+    } else if (sortOption === "newest") {
+      return sortedProducts;
+    }
+
+    return sortedProducts;
   };
 
   const isSelectedCategoryProduct = (product) => {
@@ -88,6 +84,8 @@ const Home = () => {
     ? products.filter((product) => product.name.includes(searchTerm))
     : filteredproducts;
 
+  const sortedProducts = !sortOption ? searchedProducts : getSortedProducts();
+
   return (
     <Container>
       <CategoryTabs
@@ -98,7 +96,7 @@ const Home = () => {
 
       <SortBy sortOption={sortOption} setSortOption={setSortOption} />
 
-      <ProductList products={searchedProducts} deleteProduct={deleteProduct} />
+      <ProductList products={sortedProducts} deleteProduct={deleteProduct} />
     </Container>
   );
 };

@@ -6,8 +6,11 @@ import {
   CardContent,
   CardMedia,
   Typography,
+  IconButton,
 } from "@mui/material";
 import { Link } from "react-router";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const ProductCard = ({ product, onClickDelete }) => {
   return (
@@ -54,7 +57,7 @@ const ProductCard = ({ product, onClickDelete }) => {
       <CardActions
         sx={{
           padding: "16px",
-          justifyContent: "flex-start",
+          justifyContent: "space-between",
           marginTop: "auto",
         }}
       >
@@ -70,10 +73,19 @@ const ProductCard = ({ product, onClickDelete }) => {
         >
           BUY
         </Button>
-        <Button onClick={() => onClickDelete(product)}>Delete</Button>
-        <Button component={Link} to={`/product/${product.id}/edit`}>
-          Edit
-        </Button>
+        <div>
+          <IconButton
+            color="grey"
+            component={Link}
+            to={`/product/${product.id}/edit`}
+          >
+            <EditIcon />
+          </IconButton>
+
+          <IconButton color="grey" onClick={() => onClickDelete(product)}>
+            <DeleteIcon />
+          </IconButton>
+        </div>
       </CardActions>
     </Card>
   );

@@ -3,8 +3,16 @@ import CopyrightIcon from "@mui/icons-material/Copyright";
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="textSecondary" align="center" sx={{ mt: 4 }}>
-      <CopyrightIcon fontSize="small" sx={{ verticalAlign: "middle", mr: 0.5 }} />
+    <Typography
+      variant="body2"
+      color="textSecondary"
+      align="center"
+      sx={{ mt: 4 }}
+    >
+      <CopyrightIcon
+        fontSize="small"
+        sx={{ verticalAlign: "middle", mr: 0.5 }}
+      />
       {"Copyright © "}
       <Link color="inherit" href="https://upgrad.com/">
         upGrad

@@ -2,6 +2,7 @@
   "name": "upgrad-eshop",
   "version": "0.1.0",
   "private": true,
+  "proxy": "https://dev-project-ecommerce.upgrad.dev",
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",

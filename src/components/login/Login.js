@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 
 import { AuthContext } from "../../App";
-import Navbar from "../../common/Navbar";
+import Navbar from "../../common/navbar";
 import { toast } from "react-toastify";
 
 const Login = () => {
@@ -52,10 +52,9 @@ const Login = () => {
         toast.error("Login Failed");
       }
 
-      const token =
-        "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzaGlqaTJAZGVtby5jb20iLCJpYXQiOjE3NDA4MjA2NzMsImV4cCI6MTc0MDgyOTA3M30.rSfKtcviQg_mJBf5uwf9a9gIE6erivyFNlU4Z-qZM3AadhuVNTOc-A4axikZ6pDD-WA54_KKPSrWQ5aeJTdomw";
+      const token = response.headers.get("x-auth-token");
       if (token) {
-        localStorage.setItem("authToken", token);
+        localStorage.setItem("x-auth-token", token);
       }
 
       setAuth({

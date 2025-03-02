@@ -4,7 +4,7 @@ import { Navigate } from "react-router";
 
 import { AuthContext } from "../../App";
 import { SearchContext } from "../../context/SearchContext";
-import Navbar from "../Navbar";
+import Navbar from "../navbar";
 
 const PrivateLayout = () => {
   const { auth } = useContext(AuthContext);

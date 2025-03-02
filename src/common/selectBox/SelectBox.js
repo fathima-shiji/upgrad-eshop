@@ -29,6 +29,9 @@ const SelectBox = ({
       value={value}
       getOptionLabel={getOptionLabel}
       getOptionValue={getOptionValue}
+      styles={{
+        menu: (provided) => ({ ...provided, zIndex: 9999 }),
+      }}
     />
   );
 };

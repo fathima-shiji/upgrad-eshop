@@ -3,6 +3,8 @@ import ProductForm from "../../common/productForm/ProductForm";
 import { useNavigate, useParams } from "react-router";
 import { useEffect, useState } from "react";
 
+import { editProductAPI, fetchProductDetailsAPI } from "../../api/product";
+
 const EditProduct = () => {
   const [product, setProduct] = useState();
   const [isLoading, setLoading] = useState(true);
@@ -15,37 +17,22 @@ const EditProduct = () => {
 
   const fetchProductDetails = async () => {
     try {
-      const response = await fetch(
-        `https://dev-project-ecommerce.upgrad.dev/api/products/${productId}`
-      );
-      if (!response.ok) {
-        throw new Error("Failed to fetch product details");
-      }
-      const data = await response.json();
+      const data = await fetchProductDetailsAPI(productId);
       setProduct(data);
     } catch (error) {
-      console.error("Error fetching products:", error);
+      toast.error("Failed to fetch product details");
     } finally {
       setLoading(false);
     }
   };
 
-  const handleCreate = async (product) => {
+  const handleEdit = async (product) => {
     try {
-      const response = await fetch(
-        "https://dev-project-ecommerce.upgrad.dev/api/products/",
-        {
-          method: "POST",
-          body: JSON.stringify(product),
-        }
-      );
-
-      if (response.ok) {
-        toast.success("Product Created Successfully!");
-        navigate("/");
-      }
+      await editProductAPI(product);
+      toast.success("Product Created Successfully!");
+      navigate("/");
     } catch (error) {
-      console.error("Error fetching categories:", error);
+      toast.error("Failed to update product");
     }
   };
 
@@ -53,7 +40,7 @@ const EditProduct = () => {
 
   return (
     <ProductForm
-      onSubmit={handleCreate}
+      onSubmit={handleEdit}
       initialData={product}
       title="Modify Product"
     />

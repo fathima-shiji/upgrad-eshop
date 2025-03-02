@@ -2,7 +2,7 @@ import { useNavigate } from "react-router";
 import React, { useState } from "react";
 import { Link } from "react-router";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Copyright from "../../common/Navbar/Copyright";
+import Copyright from "../../common/copyright/Copyright";
 import {
   Container,
   Box,
@@ -11,7 +11,7 @@ import {
   TextField,
   Button,
 } from "@mui/material";
-import Navbar from "../../common/Navbar";
+import Navbar from "../../common/navbar";
 import { toast } from "react-toastify";
 
 const SignUp = () => {

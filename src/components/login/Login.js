@@ -35,16 +35,13 @@ const Login = () => {
     };
 
     try {
-      const response = await fetch(
-        "https://dev-project-ecommerce.upgrad.dev/api/auth/signin",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(loginData),
-        }
-      );
+      const response = await fetch("/api/auth/signin", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(loginData),
+      });
 
       const jsonResponse = await response.json();
 
